@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GEMINI_API_KEY: ci-gemini-key
+      VERIFY_TOKEN: ci-verify-token
+      TOKEN_PAGE: ci-page-token
+      FACEBOOK_PAGE_ID: "1234567890"
+      META_APP_SECRET: ci-meta-secret
+      ADMIN_SECRET: ci-admin-secret
+      TRUST_PROXY_HEADERS: "true"
+      ALLOW_ADMIN_SECRET_QUERY: "false"
+      REDIS_STATE_ENABLED: "false"
+      REDIS_RATE_LIMIT_ENABLED: "false"
+      REDIS_REPLAY_ENABLED: "false"
+      REDIS_CONVERSATION_ENABLED: "false"
+      REDIS_PAUSE_ENABLED: "false"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Chaos Validation
+        run: npm run chaos
+
+      - name: Preflight
+        run: npm run preflight
+

@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS bot_pause (
+  sender_id TEXT PRIMARY KEY,
+  paused_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);

@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS — single source of truth
+   Brand: #113e67 (deep navy). Used for CTAs, active states,
+   focus rings and accents only — never as decorative fill.
+   ============================================================ */
+@theme {
+  /* Brand */
+  --color-brand: #113e67;
+  --color-brand-hover: #17527f;
+  --color-brand-active: #0d3253;
+  --color-brand-soft: #e9f0f6;
+  --color-brand-border: #c4d6e3;
+
+  /* Surfaces */
+  --color-canvas: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f1f4f7;
+
+  /* Lines */
+  --color-line: #e5e9ef;
+  --color-line-strong: #d3dae3;
+
+  /* Text */
+  --color-ink: #101d2e;
+  --color-ink-muted: #586675;
+  --color-ink-subtle: #8a96a5;
+
+  /* Status */
+  --color-success: #1f7a4d;
+  --color-success-hover: #1a6a43;
+  --color-success-soft: #e4f4ea;
+  --color-danger: #be2a44;
+  --color-danger-hover: #a5223a;
+  --color-danger-soft: #fbe9ec;
+  --color-warning: #8a5414;
+  --color-warning-soft: #f8edd6;
+
+  /* Radius scale */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  /* Shadow scale — restrained, single-direction */
+  --shadow-xs: 0 1px 2px rgba(16, 29, 46, 0.06);
+  --shadow-sm: 0 1px 3px rgba(16, 29, 46, 0.07), 0 1px 2px rgba(16, 29, 46, 0.04);
+  --shadow-md: 0 6px 18px rgba(16, 29, 46, 0.1);
+  --shadow-lg: 0 18px 44px rgba(16, 29, 46, 0.16);
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", sans-serif;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* One unified focus system for the whole product */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: #ffffff;
+  }
+}
+
+/* ============================================================
+   PRIMITIVES
+   ============================================================ */
+.skeleton {
+  background-color: var(--color-surface-sunken);
+  border-radius: var(--radius-sm);
+  animation: skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Slim, theme-consistent scrollbars */
+.scroll-area {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+.scroll-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-area::-webkit-scrollbar-thumb {
+  background-color: var(--color-line-strong);
+  border-radius: 999px;
+}
+.scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============================================================
+   ACCESSIBILITY — honour reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
