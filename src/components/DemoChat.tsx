@@ -66,6 +66,8 @@ export default function DemoChat({
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Client-only init from storage; safe one-shot setState on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setConversationId(getConversationId());
   }, []);
 

@@ -2010,6 +2010,8 @@ export default function AdminPage() {
     const ts = Number(storage.getItem(SECRET_TS_KEY) || "0");
     if (stored && Date.now() - ts < SESSION_TTL_MS) {
       secretRef.current = stored;
+      // Restoring a persisted session on mount; safe one-shot setState.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSecret(stored);
       setSecretDraft(stored);
       // Slide the session forward on each use so an active admin stays logged
@@ -2022,6 +2024,8 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
+    // Initial data fetch on mount; loadAll sets state asynchronously.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadAll();
   }, [loadAll]);
 
@@ -5054,6 +5058,8 @@ function EmbeddedTestBot() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    // Client-only init from storage; safe one-shot setState on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setConversationId(getTestBotConversationId());
   }, []);
 
